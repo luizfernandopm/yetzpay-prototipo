@@ -17,7 +17,6 @@
       align-items: flex-start;
     }
 
-    /* Badge de protótipo */
     .proto-badge {
       position: fixed;
       top: 10px;
@@ -34,23 +33,29 @@
       letter-spacing: 0.5px;
     }
 
-    /* Container mobile */
     .app {
       width: 430px;
       min-height: 100vh;
       background: #57b847;
-      position: relative;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
+    /* ── TELAS ── */
+    .screen { display: none; width: 100%; flex-direction: column; align-items: center; flex: 1; }
+    .screen.active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .screen.active { animation: fadeIn 0.3s ease; }
+
     /* ── HERO ── */
     .hero {
       width: 100%;
       height: 540px;
-      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -60,10 +65,8 @@
     .phone-frame {
       width: 260px;
       height: 370px;
-      border: none;
       border-radius: 32px;
       overflow: hidden;
-      position: relative;
     }
 
     .hero-person {
@@ -83,10 +86,6 @@
       margin-bottom: 28px;
     }
 
-    /* ── STEPS ── */
-    .screen { display: none; width: 100%; flex-direction: column; align-items: center; }
-    .screen.active { display: flex; }
-
     /* ── FORM ── */
     .form-area {
       width: 100%;
@@ -102,7 +101,15 @@
       margin-bottom: 12px;
     }
 
-    /* Ícone esquerdo */
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .input-wrapper.revealed {
+      animation: slideDown 0.35s ease;
+    }
+
     .input-icon-left {
       position: absolute;
       left: 18px;
@@ -144,14 +151,21 @@
       box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
     }
 
-    /* Estado de loading no input */
+    /* Loading */
     .form-input.is-loading {
       background: #f2f2f2;
       color: #aaa;
       cursor: not-allowed;
     }
 
-    /* Spinner direita do input */
+    /* Validado — campo permanece visível com dado */
+    .form-input.is-validated {
+      background: rgba(255,255,255,0.6);
+      color: #555;
+      cursor: default;
+    }
+
+    /* Spinner */
     .input-spinner {
       position: absolute;
       right: 16px;
@@ -183,6 +197,18 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* Checkmark validado */
+    .check-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: none;
+      color: #57b847;
+    }
+
+    .check-icon.visible { display: flex; }
+
     /* Ícone olho — senha */
     .eye-toggle {
       position: absolute;
@@ -196,7 +222,6 @@
       padding: 4px;
       display: flex;
       align-items: center;
-      transition: opacity 0.2s;
     }
 
     .eye-toggle.hide { display: none; }
@@ -222,7 +247,7 @@
     .btn-enter:active:not(:disabled) { transform: scale(0.98); }
     .btn-enter:disabled { opacity: 0.55; cursor: not-allowed; }
 
-    /* ── Links grid (Como fazer / WhatsApp) ── */
+    /* ── Links grid ── */
     .links-grid {
       display: flex;
       width: 100%;
@@ -267,6 +292,7 @@
     .ajuda-row {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
       width: 100%;
       padding: 14px 28px;
@@ -278,28 +304,16 @@
       letter-spacing: 1px;
     }
 
-    /* ── STEP DOTS ── */
-    .step-dots {
-      display: flex;
-      gap: 8px;
-      margin-top: 20px;
-      margin-bottom: 4px;
-    }
-
-    .step-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.3);
-      transition: background 0.3s, transform 0.3s;
-    }
-
-    .step-dot.active {
+    /* ── FOOTER ── */
+    .footer {
+      width: 100%;
+      margin-top: auto;
+      padding: 20px 16px;
       background: #fff;
-      transform: scale(1.25);
-    }
-
-    .step-dot.done {
-      background: rgba(255,255,255,0.6);
+      color: #555;
+      font-size: 11px;
+      text-align: center;
+      letter-spacing: 0.3px;
     }
 
     /* ── SUCCESS ── */
@@ -307,9 +321,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 48px 32px;
+      padding: 80px 32px 48px;
       color: #fff;
       text-align: center;
+      flex: 1;
     }
 
     .success-icon {
@@ -329,17 +344,8 @@
       to   { transform: scale(1); opacity: 1; }
     }
 
-    .success-title {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .success-sub {
-      font-size: 14px;
-      opacity: 0.8;
-      line-height: 1.6;
-    }
+    .success-title { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+    .success-sub   { font-size: 14px; opacity: 0.8; line-height: 1.6; }
 
     .btn-restart {
       margin-top: 36px;
@@ -355,27 +361,7 @@
       cursor: pointer;
     }
 
-    /* ── FOOTER ── */
-    .footer {
-      margin-top: auto;
-      padding: 20px 16px;
-      color: rgba(255,255,255,0.55);
-      font-size: 11px;
-      text-align: center;
-      letter-spacing: 0.3px;
-    }
-
-    /* Animação de fade entre telas */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .screen.active { animation: fadeIn 0.3s ease; }
-
-    @media (max-width: 440px) {
-      .app { width: 100%; }
-    }
+    @media (max-width: 440px) { .app { width: 100%; } }
   </style>
 </head>
 <body>
@@ -384,10 +370,10 @@
 
 <div class="app">
 
-  <!-- ════════════════════════════════
-       TELA 1 — CAMPANHA
-       ════════════════════════════════ -->
-  <div class="screen active" id="step1">
+  <!-- ══════════════════════════════
+       TELA PRINCIPAL — FLUXO
+       ══════════════════════════════ -->
+  <div class="screen active" id="main-screen">
 
     <div class="hero">
       <div class="phone-frame">
@@ -404,7 +390,9 @@
     </p>
 
     <div class="form-area">
-      <div class="input-wrapper">
+
+      <!-- Campo 1: Campanha -->
+      <div class="input-wrapper" id="field-campanha">
         <span class="input-icon-left">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="7.5" cy="15.5" r="5.5"/>
@@ -417,71 +405,15 @@
           <div class="spinner-ring"></div>
           <span class="spinner-label">Verificando...</span>
         </div>
-      </div>
-
-      <button class="btn-enter" id="btn-step1" onclick="submitStep(1)">ENTRAR</button>
-    </div>
-
-    <!-- Links grade -->
-    <div class="links-grid">
-      <div class="link-item">
-        <img class="link-thumb"
-             src="https://yetzpay.com.br/assets/player-CbXpT-cS.png"
-             alt=""
-             onerror="this.style.display='none'">
-        <span>Como fazer<br>seu cadastro</span>
-      </div>
-      <div class="link-item">
-        <div class="link-wa-icon">
-          <svg width="42" height="42" viewBox="0 0 42 42" fill="white" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21 3.5C11.34 3.5 3.5 11.34 3.5 21c0 3.08.82 5.97 2.26 8.47L3.5 38.5l9.27-2.22A17.4 17.4 0 0 0 21 38.5c9.66 0 17.5-7.84 17.5-17.5S30.66 3.5 21 3.5zm0 31.5a14.9 14.9 0 0 1-7.6-2.08l-.54-.32-5.6 1.34 1.38-5.43-.35-.56A14.9 14.9 0 0 1 6.1 21C6.1 12.77 12.77 6.1 21 6.1S35.9 12.77 35.9 21 29.23 35 21 35zm8.18-10.98c-.45-.22-2.64-1.3-3.05-1.45-.41-.15-.7-.22-.99.22-.29.44-1.12 1.45-1.38 1.75-.25.29-.5.33-.96.11-.45-.22-1.91-.7-3.63-2.24-1.34-1.19-2.24-2.67-2.5-3.12-.26-.44-.03-.68.2-.9.2-.2.45-.52.67-.78.22-.26.3-.44.44-.73.15-.3.07-.55-.04-.78-.1-.22-1-2.4-1.36-3.29-.36-.87-.72-.75-1-.77-.26-.01-.55-.02-.84-.02-.29 0-.77.11-1.17.55-.4.44-1.54 1.5-1.54 3.67 0 2.16 1.58 4.25 1.8 4.54.22.3 3.1 4.74 7.53 6.65 1.05.45 1.87.72 2.51.92.06.02.11.03.17.05 1.05.34 2.01.29 2.76.18.84-.13 2.6-1.06 2.97-2.08.36-1.02.36-1.9.25-2.08-.1-.18-.38-.29-.84-.51z"/>
+        <span class="check-icon" id="check-campanha">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#57b847" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
           </svg>
-        </div>
-        <span>Clique aqui se não<br>receber seu código</span>
+        </span>
       </div>
-    </div>
 
-    <!-- Precisa de ajuda -->
-    <div class="ajuda-row">
-      <svg width="22" height="22" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.786 22.236l.015-3.513 5-.021a1.25 1.25 0 0 0 1.247-1.252L22.11 4.749a1.25 1.25 0 0 0-1.245-1.003L4.865 3.676a1.25 1.25 0 0 0-1.003 1.252L3.806 17.672a1.25 1.25 0 0 0 1.252.003l6-.025 4.728 4.586z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M15.823 13.723L7.823 13.689" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M7.844 8.689L17.844 8.732" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      PRECISA DE AJUDA?
-    </div>
-
-    <div class="step-dots">
-      <div class="step-dot active"></div>
-      <div class="step-dot"></div>
-      <div class="step-dot"></div>
-    </div>
-
-    <div class="footer">YETZ LTDA | CNPJ: 28.325.166/0001-05 | 2026 | Todos os direitos reservados</div>
-  </div><!-- /step1 -->
-
-
-  <!-- ════════════════════════════════
-       TELA 2 — CPF
-       ════════════════════════════════ -->
-  <div class="screen" id="step2">
-
-    <div class="hero">
-      <div class="phone-frame">
-        <img class="hero-person"
-             src="https://yetzpay.com.br/assets/img-03-QauEq33L.png"
-             alt="Pessoa"
-             onerror="this.style.background='#4aaa39';this.removeAttribute('src')">
-      </div>
-    </div>
-
-    <p class="welcome">
-      Que bom ter você por aqui!<br>
-      Para começarmos, informe seus dados de acesso.
-    </p>
-
-    <div class="form-area">
-      <div class="input-wrapper">
+      <!-- Campo 2: CPF — oculto até campanha ser validada -->
+      <div class="input-wrapper" id="field-cpf" style="display:none">
         <span class="input-icon-left">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -493,42 +425,15 @@
           <div class="spinner-ring"></div>
           <span class="spinner-label">Verificando...</span>
         </div>
+        <span class="check-icon" id="check-cpf">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#57b847" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </span>
       </div>
 
-      <button class="btn-enter" id="btn-step2" onclick="submitStep(2)">ENTRAR</button>
-    </div>
-
-    <div class="step-dots">
-      <div class="step-dot done"></div>
-      <div class="step-dot active"></div>
-      <div class="step-dot"></div>
-    </div>
-
-    <div class="footer">YETZ LTDA | CNPJ: 28.325.166/0001-05 | 2026 | Todos os direitos reservados</div>
-  </div><!-- /step2 -->
-
-
-  <!-- ════════════════════════════════
-       TELA 3 — SENHA
-       ════════════════════════════════ -->
-  <div class="screen" id="step3">
-
-    <div class="hero">
-      <div class="phone-frame">
-        <img class="hero-person"
-             src="https://yetzpay.com.br/assets/img-05-CB7w9oxD.png"
-             alt="Pessoa"
-             onerror="this.style.background='#4aaa39';this.removeAttribute('src')">
-      </div>
-    </div>
-
-    <p class="welcome">
-      Que bom ter você por aqui!<br>
-      Para começarmos, informe seus dados de acesso.
-    </p>
-
-    <div class="form-area">
-      <div class="input-wrapper">
+      <!-- Campo 3: Senha — oculto até CPF ser validado -->
+      <div class="input-wrapper" id="field-senha" style="display:none">
         <span class="input-icon-left">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
@@ -548,25 +453,46 @@
         </div>
       </div>
 
-      <button class="btn-enter" id="btn-step3" onclick="submitStep(3)">ENTRAR</button>
+      <button class="btn-enter" id="btn-enter" onclick="submitCurrent()">ENTRAR</button>
     </div>
 
-    <div class="step-dots">
-      <div class="step-dot done"></div>
-      <div class="step-dot done"></div>
-      <div class="step-dot active"></div>
+    <!-- Links -->
+    <div class="links-grid">
+      <div class="link-item">
+        <img class="link-thumb"
+             src="https://yetzpay.com.br/assets/player-CbXpT-cS.png"
+             alt=""
+             onerror="this.style.display='none'">
+        <span>Como fazer<br>seu cadastro</span>
+      </div>
+      <div class="link-item">
+        <div class="link-wa-icon">
+          <svg width="42" height="42" viewBox="0 0 42 42" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 3.5C11.34 3.5 3.5 11.34 3.5 21c0 3.08.82 5.97 2.26 8.47L3.5 38.5l9.27-2.22A17.4 17.4 0 0 0 21 38.5c9.66 0 17.5-7.84 17.5-17.5S30.66 3.5 21 3.5zm0 31.5a14.9 14.9 0 0 1-7.6-2.08l-.54-.32-5.6 1.34 1.38-5.43-.35-.56A14.9 14.9 0 0 1 6.1 21C6.1 12.77 12.77 6.1 21 6.1S35.9 12.77 35.9 21 29.23 35 21 35zm8.18-10.98c-.45-.22-2.64-1.3-3.05-1.45-.41-.15-.7-.22-.99.22-.29.44-1.12 1.45-1.38 1.75-.25.29-.5.33-.96.11-.45-.22-1.91-.7-3.63-2.24-1.34-1.19-2.24-2.67-2.5-3.12-.26-.44-.03-.68.2-.9.2-.2.45-.52.67-.78.22-.26.3-.44.44-.73.15-.3.07-.55-.04-.78-.1-.22-1-2.4-1.36-3.29-.36-.87-.72-.75-1-.77-.26-.01-.55-.02-.84-.02-.29 0-.77.11-1.17.55-.4.44-1.54 1.5-1.54 3.67 0 2.16 1.58 4.25 1.8 4.54.22.3 3.1 4.74 7.53 6.65 1.05.45 1.87.72 2.51.92.06.02.11.03.17.05 1.05.34 2.01.29 2.76.18.84-.13 2.6-1.06 2.97-2.08.36-1.02.36-1.9.25-2.08-.1-.18-.38-.29-.84-.51z"/>
+          </svg>
+        </div>
+        <span>Clique aqui se não<br>receber seu código</span>
+      </div>
+    </div>
+
+    <div class="ajuda-row">
+      <svg width="22" height="22" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.786 22.236l.015-3.513 5-.021a1.25 1.25 0 0 0 1.247-1.252L22.11 4.749a1.25 1.25 0 0 0-1.245-1.003L4.865 3.676a1.25 1.25 0 0 0-1.003 1.252L3.806 17.672a1.25 1.25 0 0 0 1.252.003l6-.025 4.728 4.586z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M15.823 13.723L7.823 13.689" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M7.844 8.689L17.844 8.732" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      PRECISA DE AJUDA?
     </div>
 
     <div class="footer">YETZ LTDA | CNPJ: 28.325.166/0001-05 | 2026 | Todos os direitos reservados</div>
-  </div><!-- /step3 -->
+  </div><!-- /main-screen -->
 
 
-  <!-- ════════════════════════════════
-       TELA 4 — SUCESSO
-       ════════════════════════════════ -->
-  <div class="screen" id="step4">
+  <!-- ══════════════════════════════
+       TELA DE SUCESSO
+       ══════════════════════════════ -->
+  <div class="screen" id="success-screen">
     <div class="success-wrap">
-
       <div class="success-icon">
         <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="20 6 9 17 4 12"/>
@@ -585,11 +511,88 @@
     </div>
 
     <div class="footer">YETZ LTDA | CNPJ: 28.325.166/0001-05 | 2026 | Todos os direitos reservados</div>
-  </div><!-- /step4 -->
+  </div><!-- /success-screen -->
 
 </div><!-- /app -->
 
 <script>
+  let currentStep = 1; // 1=campanha, 2=cpf, 3=senha
+
+  const steps = {
+    1: { inputId: 'input-campanha', spinnerId: 'spinner-campanha', checkId: 'check-campanha', fieldId: 'field-campanha', nextField: 'field-cpf',  nextInput: 'input-cpf',   nextStep: 2 },
+    2: { inputId: 'input-cpf',      spinnerId: 'spinner-cpf',      checkId: 'check-cpf',      fieldId: 'field-cpf',      nextField: 'field-senha', nextInput: 'input-senha', nextStep: 3 },
+    3: { inputId: 'input-senha',    spinnerId: 'spinner-senha',    checkId: null,             fieldId: 'field-senha',    nextField: null,          nextInput: null,          nextStep: 4, eyeId: 'eye-btn' },
+  };
+
+  function submitCurrent() {
+    const cfg = steps[currentStep];
+    const input  = document.getElementById(cfg.inputId);
+    const spinner = document.getElementById(cfg.spinnerId);
+    const btn    = document.getElementById('btn-enter');
+
+    // Ativa loading
+    input.classList.add('is-loading');
+    input.disabled = true;
+    spinner.classList.add('visible');
+    btn.disabled = true;
+    if (cfg.eyeId) document.getElementById(cfg.eyeId).classList.add('hide');
+
+    setTimeout(() => {
+      // Finaliza loading — campo fica disabled mostrando o valor
+      spinner.classList.remove('visible');
+      input.classList.remove('is-loading');
+      input.classList.add('is-validated');
+      // Mostra checkmark
+      if (cfg.checkId) document.getElementById(cfg.checkId).classList.add('visible');
+
+      if (cfg.nextStep === 4) {
+        // Vai para sucesso
+        goTo('success-screen');
+      } else {
+        // Revela próximo campo
+        currentStep = cfg.nextStep;
+        const nextFieldEl = document.getElementById(cfg.nextField);
+        nextFieldEl.style.display = 'block';
+        nextFieldEl.classList.add('revealed');
+        btn.disabled = false;
+
+        // Foca no novo campo e rola até ele
+        const nextInput = document.getElementById(cfg.nextInput);
+        setTimeout(() => {
+          nextInput.focus();
+          nextFieldEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    }, 1800);
+  }
+
+  function goTo(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function restart() {
+    // Reseta campos
+    ['campanha','cpf','senha'].forEach(name => {
+      const inp = document.getElementById('input-' + name);
+      inp.value = '';
+      inp.disabled = false;
+      inp.classList.remove('is-loading', 'is-validated');
+      document.getElementById('spinner-' + name).classList.remove('visible');
+    });
+    document.getElementById('check-campanha').classList.remove('visible');
+    document.getElementById('check-cpf').classList.remove('visible');
+    document.getElementById('field-cpf').style.display = 'none';
+    document.getElementById('field-cpf').classList.remove('revealed');
+    document.getElementById('field-senha').style.display = 'none';
+    document.getElementById('field-senha').classList.remove('revealed');
+    document.getElementById('eye-btn').classList.remove('hide');
+    document.getElementById('btn-enter').disabled = false;
+    currentStep = 1;
+    goTo('main-screen');
+  }
+
   function maskCPF(el) {
     let v = el.value.replace(/\D/g, '').substring(0, 11);
     if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
@@ -608,44 +611,6 @@
       ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
       : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
   }
-
-  function goTo(step) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('step' + step).classList.add('active');
-    window.scrollTo(0, 0);
-  }
-
-  function submitStep(step) {
-    const configs = {
-      1: { inputId: 'input-campanha', spinnerId: 'spinner-campanha', btnId: 'btn-step1', next: 2 },
-      2: { inputId: 'input-cpf',      spinnerId: 'spinner-cpf',      btnId: 'btn-step2', next: 3 },
-      3: { inputId: 'input-senha',    spinnerId: 'spinner-senha',    btnId: 'btn-step3', next: 4, eyeId: 'eye-btn' },
-    };
-
-    const cfg = configs[step];
-    const input = document.getElementById(cfg.inputId);
-    const spinner = document.getElementById(cfg.spinnerId);
-    const btn = document.getElementById(cfg.btnId);
-
-    input.classList.add('is-loading');
-    input.disabled = true;
-    spinner.classList.add('visible');
-    btn.disabled = true;
-
-    if (cfg.eyeId) document.getElementById(cfg.eyeId).classList.add('hide');
-
-    setTimeout(() => {
-      input.classList.remove('is-loading');
-      input.disabled = false;
-      input.value = '';
-      spinner.classList.remove('visible');
-      btn.disabled = false;
-      if (cfg.eyeId) document.getElementById(cfg.eyeId).classList.remove('hide');
-      goTo(cfg.next);
-    }, 1800);
-  }
-
-  function restart() { goTo(1); }
 </script>
 
 </body>
