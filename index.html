@@ -502,10 +502,6 @@
       <p class="link-secondary" style="margin-top:8px;">Clique aqui se não receber seu código</p>
     </div>
 
-    <!-- Nota explicativa da solução -->
-    <div class="solution-note">
-      <strong>💡 Solução proposta:</strong> ao clicar em "Entrar", o feedback de loading aparece <strong>dentro do campo</strong> (spinner + "Verificando..."), não apenas no botão — que fica oculto pelo teclado virtual no mobile.
-    </div>
 
     <!-- Step dots -->
     <div class="step-dots">
@@ -580,9 +576,6 @@
       <button class="btn-enter" id="btn-step2" onclick="submitStep(2)">ENTRAR</button>
     </div>
 
-    <div class="solution-note">
-      <strong>💡 Solução proposta:</strong> mesmo comportamento — spinner dentro do campo de CPF enquanto o teclado está aberto, garantindo feedback visível.
-    </div>
 
     <div class="step-dots">
       <div class="step-dot done"></div>
@@ -661,9 +654,6 @@
       <button class="btn-enter" id="btn-step3" onclick="submitStep(3)">ENTRAR</button>
     </div>
 
-    <div class="solution-note">
-      <strong>💡 Senha:</strong> o ícone de olho é <strong>substituído</strong> pelo spinner durante o loading — não há conflito visual entre os dois elementos.
-    </div>
 
     <div class="step-dots">
       <div class="step-dot done"></div>
@@ -697,21 +687,11 @@
 
       <button class="btn-restart" onclick="restart()">↺ RECOMEÇAR</button>
 
-      <div class="solution-note" style="margin-top:40px;">
-        <strong>✅ Resumo da solução:</strong><br>
-        Em todas as etapas, o spinner apareceu <strong>dentro do campo</strong>, visível mesmo com o teclado virtual aberto. O campo foi desabilitado durante o loading, prevenindo duplos envios.
-      </div>
     </div>
 
     <div class="footer">YETZ LTDA | CNPJ: 28.325.166/0001-05 | 2026 | Todos os direitos reservados</div>
   </div><!-- /step4 -->
 
-  <!-- WhatsApp FAB -->
-  <div class="whatsapp-fab" title="Precisa de ajuda?">
-    <svg width="28" height="28" viewBox="0 0 42 42" fill="white" xmlns="http://www.w3.org/2000/svg">
-      <path d="M21 3.5C11.34 3.5 3.5 11.34 3.5 21c0 3.08.82 5.97 2.26 8.47L3.5 38.5l9.27-2.22A17.4 17.4 0 0 0 21 38.5c9.66 0 17.5-7.84 17.5-17.5S30.66 3.5 21 3.5zm0 31.5a14.9 14.9 0 0 1-7.6-2.08l-.54-.32-5.6 1.34 1.38-5.43-.35-.56A14.9 14.9 0 0 1 6.1 21C6.1 12.77 12.77 6.1 21 6.1S35.9 12.77 35.9 21 29.23 35 21 35zm8.18-10.98c-.45-.22-2.64-1.3-3.05-1.45-.41-.15-.7-.22-.99.22-.29.44-1.12 1.45-1.38 1.75-.25.29-.5.33-.96.11-.45-.22-1.91-.7-3.63-2.24-1.34-1.19-2.24-2.67-2.5-3.12-.26-.44-.03-.68.2-.9.2-.2.45-.52.67-.78.22-.26.3-.44.44-.73.15-.3.07-.55-.04-.78-.1-.22-1-2.4-1.36-3.29-.36-.87-.72-.75-1-.77-.26-.01-.55-.02-.84-.02-.29 0-.77.11-1.17.55-.4.44-1.54 1.5-1.54 3.67 0 2.16 1.58 4.25 1.8 4.54.22.3 3.1 4.74 7.53 6.65 1.05.45 1.87.72 2.51.92.06.02.11.03.17.05 1.05.34 2.01.29 2.76.18.84-.13 2.6-1.06 2.97-2.08.36-1.02.36-1.9.25-2.08-.1-.18-.38-.29-.84-.51z"/>
-    </svg>
-  </div>
 
 </div><!-- /app -->
 
