@@ -49,7 +49,7 @@
     /* ── HERO ── */
     .hero {
       width: 100%;
-      height: 580px;
+      height: 540px;
       position: relative;
       display: flex;
       justify-content: center;
@@ -73,71 +73,6 @@
       object-fit: cover;
       display: block;
     }
-
-    /* Card YetzPay sobre o frame */
-    .card-wrap {
-      position: absolute;
-      bottom: 88px;
-      left: 58px;
-      width: 145px;
-      transform: rotate(-4deg);
-      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.3));
-    }
-
-    .yetz-card {
-      width: 145px;
-      height: 92px;
-      background: linear-gradient(135deg, #5cc94a 0%, #3da82f 60%, #2d8a22 100%);
-      border-radius: 10px;
-      padding: 10px 12px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .yetz-card::before {
-      content: '';
-      position: absolute;
-      top: -20px; right: -20px;
-      width: 80px; height: 80px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.07);
-    }
-
-    .yetz-card::after {
-      content: '';
-      position: absolute;
-      bottom: -30px; left: -10px;
-      width: 100px; height: 100px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-    }
-
-    .card-logo {
-      height: 14px;
-      filter: brightness(0) invert(1);
-      opacity: 0.9;
-    }
-
-    .card-nfc {
-      position: absolute;
-      top: 10px; right: 12px;
-      width: 18px; height: 18px;
-      opacity: 0.7;
-    }
-
-    .card-mastercard {
-      position: absolute;
-      bottom: 10px; right: 12px;
-      display: flex;
-    }
-
-    .mc-circle {
-      width: 22px; height: 22px;
-      border-radius: 50%;
-    }
-
-    .mc-red { background: #EB001B; }
-    .mc-orange { background: #F79E1B; margin-left: -8px; mix-blend-mode: multiply; }
 
     /* ── TEXTO ── */
     .welcome {
@@ -267,43 +202,89 @@
 
     .eye-toggle.hide { display: none; }
 
-    /* Botão ENTRAR */
+    /* ── Botão ENTRAR ── */
     .btn-enter {
       width: 100%;
       height: 60px;
       border-radius: 600px;
-      border: 2px solid rgba(255,255,255,0.45);
-      background: rgba(255,255,255,0.12);
-      color: #fff;
+      border: none;
+      background: #fff;
+      color: #57b847;
       font-family: 'Oxanium', Arial, sans-serif;
       font-size: 15px;
       font-weight: 600;
       letter-spacing: 3px;
       cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
+      transition: opacity 0.2s, transform 0.1s;
       margin-top: 20px;
     }
 
-    .btn-enter:hover:not(:disabled) { background: rgba(255,255,255,0.22); }
+    .btn-enter:hover:not(:disabled) { opacity: 0.92; }
     .btn-enter:active:not(:disabled) { transform: scale(0.98); }
     .btn-enter:disabled { opacity: 0.55; cursor: not-allowed; }
 
-    /* Link secundário */
-    .link-secondary {
-      color: rgba(255,255,255,0.75);
+    /* ── Links grid (Como fazer / WhatsApp) ── */
+    .links-grid {
+      display: flex;
+      width: 100%;
+      margin-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .link-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 12px;
+      cursor: pointer;
+      color: #fff;
       font-size: 12px;
       text-align: center;
-      margin-top: 16px;
+      line-height: 1.4;
+    }
+
+    .link-item + .link-item {
+      border-left: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .link-thumb {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .link-wa-icon {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── PRECISA DE AJUDA ── */
+    .ajuda-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 28px;
+      border-top: 1px solid rgba(255,255,255,0.2);
       cursor: pointer;
-      text-decoration: underline;
-      letter-spacing: 0.3px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
     }
 
     /* ── STEP DOTS ── */
     .step-dots {
       display: flex;
       gap: 8px;
-      margin-top: 28px;
+      margin-top: 20px;
+      margin-bottom: 4px;
     }
 
     .step-dot {
@@ -365,9 +346,9 @@
       margin-top: 36px;
       padding: 14px 36px;
       border-radius: 600px;
-      border: 2px solid rgba(255,255,255,0.45);
-      background: rgba(255,255,255,0.15);
-      color: #fff;
+      border: none;
+      background: #fff;
+      color: #57b847;
       font-family: 'Oxanium', Arial, sans-serif;
       font-size: 13px;
       font-weight: 600;
@@ -375,24 +356,10 @@
       cursor: pointer;
     }
 
-    /* ── WHATSAPP ── */
-    .whatsapp-fab {
-      position: fixed;
-      bottom: 20px;
-      right: calc(50% - 215px + 16px);
-      width: 52px; height: 52px;
-      border-radius: 50%;
-      background: #25D366;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      cursor: pointer;
-      z-index: 100;
-    }
-
     /* ── FOOTER ── */
     .footer {
       margin-top: auto;
-      padding: 24px 16px 20px;
+      padding: 20px 16px;
       color: rgba(255,255,255,0.55);
       font-size: 11px;
       text-align: center;
@@ -407,24 +374,8 @@
 
     .screen.active { animation: fadeIn 0.3s ease; }
 
-    /* ── ANOTAÇÃO DE SOLUÇÃO ── */
-    .solution-note {
-      margin: 12px 28px 0;
-      padding: 10px 16px;
-      background: rgba(0,0,0,0.18);
-      border-radius: 12px;
-      border-left: 3px solid rgba(255,255,255,0.5);
-      color: rgba(255,255,255,0.85);
-      font-size: 11px;
-      line-height: 1.5;
-      letter-spacing: 0.2px;
-    }
-
-    .solution-note strong { color: #fff; font-weight: 600; }
-
     @media (max-width: 440px) {
       .app { width: 100%; }
-      .whatsapp-fab { right: 16px; }
     }
   </style>
 </head>
@@ -439,7 +390,6 @@
        ════════════════════════════════ -->
   <div class="screen active" id="step1">
 
-    <!-- Hero -->
     <div class="hero">
       <div class="phone-frame">
         <img class="hero-person"
@@ -447,35 +397,15 @@
              alt="Pessoa"
              onerror="this.style.background='#4aaa39';this.removeAttribute('src')">
       </div>
-      <div class="card-wrap">
-        <div class="yetz-card">
-          <img class="card-logo"
-               src="https://yetzpay.com.br/assets/nova-logo-BWXOLnxS.svg"
-               alt="YetzPay"
-               onerror="this.style.display='none'">
-          <svg class="card-nfc" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2">
-            <path d="M1 6a11 11 0 0 1 0 12"/>
-            <path d="M5 8.4a7 7 0 0 1 0 7.2"/>
-            <path d="M9 10.8a3 3 0 0 1 0 2.4"/>
-          </svg>
-          <div class="card-mastercard">
-            <div class="mc-circle mc-red"></div>
-            <div class="mc-circle mc-orange"></div>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <!-- Texto boas-vindas -->
     <p class="welcome">
       Que bom ter você por aqui!<br>
       Para começarmos, informe seus dados de acesso.
     </p>
 
-    <!-- Form -->
     <div class="form-area">
       <div class="input-wrapper">
-        <!-- ícone chave -->
         <span class="input-icon-left">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="7.5" cy="15.5" r="5.5"/>
@@ -483,13 +413,7 @@
             <path d="M15.5 7.5l3 3L22 7l-3-3"/>
           </svg>
         </span>
-
-        <input class="form-input" id="input-campanha"
-               type="text"
-               placeholder="Campanha"
-               autocomplete="off">
-
-        <!-- Spinner de loading (solução proposta) -->
+        <input class="form-input" id="input-campanha" type="text" placeholder="Campanha" autocomplete="off">
         <div class="input-spinner" id="spinner-campanha">
           <div class="spinner-ring"></div>
           <span class="spinner-label">Verificando...</span>
@@ -497,20 +421,43 @@
       </div>
 
       <button class="btn-enter" id="btn-step1" onclick="submitStep(1)">ENTRAR</button>
-
-      <p class="link-secondary">Como fazer seu cadastro</p>
-      <p class="link-secondary" style="margin-top:8px;">Clique aqui se não receber seu código</p>
     </div>
 
+    <!-- Links grade -->
+    <div class="links-grid">
+      <div class="link-item">
+        <img class="link-thumb"
+             src="https://yetzpay.com.br/assets/player-CbXpT-cS.png"
+             alt=""
+             onerror="this.style.display='none'">
+        <span>Como fazer<br>seu cadastro</span>
+      </div>
+      <div class="link-item">
+        <div class="link-wa-icon">
+          <svg width="42" height="42" viewBox="0 0 42 42" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 3.5C11.34 3.5 3.5 11.34 3.5 21c0 3.08.82 5.97 2.26 8.47L3.5 38.5l9.27-2.22A17.4 17.4 0 0 0 21 38.5c9.66 0 17.5-7.84 17.5-17.5S30.66 3.5 21 3.5zm0 31.5a14.9 14.9 0 0 1-7.6-2.08l-.54-.32-5.6 1.34 1.38-5.43-.35-.56A14.9 14.9 0 0 1 6.1 21C6.1 12.77 12.77 6.1 21 6.1S35.9 12.77 35.9 21 29.23 35 21 35zm8.18-10.98c-.45-.22-2.64-1.3-3.05-1.45-.41-.15-.7-.22-.99.22-.29.44-1.12 1.45-1.38 1.75-.25.29-.5.33-.96.11-.45-.22-1.91-.7-3.63-2.24-1.34-1.19-2.24-2.67-2.5-3.12-.26-.44-.03-.68.2-.9.2-.2.45-.52.67-.78.22-.26.3-.44.44-.73.15-.3.07-.55-.04-.78-.1-.22-1-2.4-1.36-3.29-.36-.87-.72-.75-1-.77-.26-.01-.55-.02-.84-.02-.29 0-.77.11-1.17.55-.4.44-1.54 1.5-1.54 3.67 0 2.16 1.58 4.25 1.8 4.54.22.3 3.1 4.74 7.53 6.65 1.05.45 1.87.72 2.51.92.06.02.11.03.17.05 1.05.34 2.01.29 2.76.18.84-.13 2.6-1.06 2.97-2.08.36-1.02.36-1.9.25-2.08-.1-.18-.38-.29-.84-.51z"/>
+          </svg>
+        </div>
+        <span>Clique aqui se não<br>receber seu código</span>
+      </div>
+    </div>
 
-    <!-- Step dots -->
+    <!-- Precisa de ajuda -->
+    <div class="ajuda-row">
+      <svg width="22" height="22" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.786 22.236l.015-3.513 5-.021a1.25 1.25 0 0 0 1.247-1.252L22.11 4.749a1.25 1.25 0 0 0-1.245-1.003L4.865 3.676a1.25 1.25 0 0 0-1.003 1.252L3.806 17.672a1.25 1.25 0 0 0 1.252.003l6-.025 4.728 4.586z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M15.823 13.723L7.823 13.689" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M7.844 8.689L17.844 8.732" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      PRECISA DE AJUDA?
+    </div>
+
     <div class="step-dots">
       <div class="step-dot active"></div>
       <div class="step-dot"></div>
       <div class="step-dot"></div>
     </div>
 
-    <!-- Footer -->
     <div class="footer">YETZ LTDA | CNPJ: 28.325.166/0001-05 | 2026 | Todos os direitos reservados</div>
   </div><!-- /step1 -->
 
@@ -527,28 +474,11 @@
              alt="Pessoa"
              onerror="this.style.background='#4aaa39';this.removeAttribute('src')">
       </div>
-      <div class="card-wrap">
-        <div class="yetz-card">
-          <img class="card-logo"
-               src="https://yetzpay.com.br/assets/nova-logo-BWXOLnxS.svg"
-               alt="YetzPay"
-               onerror="this.style.display='none'">
-          <svg class="card-nfc" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2">
-            <path d="M1 6a11 11 0 0 1 0 12"/>
-            <path d="M5 8.4a7 7 0 0 1 0 7.2"/>
-            <path d="M9 10.8a3 3 0 0 1 0 2.4"/>
-          </svg>
-          <div class="card-mastercard">
-            <div class="mc-circle mc-red"></div>
-            <div class="mc-circle mc-orange"></div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <p class="welcome">
-      Ótimo! Agora informe<br>
-      o seu <strong>CPF</strong>.
+      Que bom ter você por aqui!<br>
+      Para começarmos, informe seus dados de acesso.
     </p>
 
     <div class="form-area">
@@ -559,14 +489,7 @@
             <circle cx="12" cy="7" r="4"/>
           </svg>
         </span>
-
-        <input class="form-input" id="input-cpf"
-               type="text"
-               placeholder="CPF"
-               autocomplete="off"
-               maxlength="14"
-               oninput="maskCPF(this)">
-
+        <input class="form-input" id="input-cpf" type="text" placeholder="CPF" autocomplete="off" maxlength="14" oninput="maskCPF(this)">
         <div class="input-spinner" id="spinner-cpf">
           <div class="spinner-ring"></div>
           <span class="spinner-label">Verificando...</span>
@@ -575,7 +498,6 @@
 
       <button class="btn-enter" id="btn-step2" onclick="submitStep(2)">ENTRAR</button>
     </div>
-
 
     <div class="step-dots">
       <div class="step-dot done"></div>
@@ -599,28 +521,11 @@
              alt="Pessoa"
              onerror="this.style.background='#4aaa39';this.removeAttribute('src')">
       </div>
-      <div class="card-wrap">
-        <div class="yetz-card">
-          <img class="card-logo"
-               src="https://yetzpay.com.br/assets/nova-logo-BWXOLnxS.svg"
-               alt="YetzPay"
-               onerror="this.style.display='none'">
-          <svg class="card-nfc" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2">
-            <path d="M1 6a11 11 0 0 1 0 12"/>
-            <path d="M5 8.4a7 7 0 0 1 0 7.2"/>
-            <path d="M9 10.8a3 3 0 0 1 0 2.4"/>
-          </svg>
-          <div class="card-mastercard">
-            <div class="mc-circle mc-red"></div>
-            <div class="mc-circle mc-orange"></div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <p class="welcome">
-      Perfeito! Agora informe<br>
-      a sua <strong>Senha</strong>.
+      Que bom ter você por aqui!<br>
+      Para começarmos, informe seus dados de acesso.
     </p>
 
     <div class="form-area">
@@ -631,20 +536,13 @@
             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
           </svg>
         </span>
-
-        <input class="form-input" id="input-senha"
-               type="password"
-               placeholder="Senha">
-
-        <!-- Olho — oculto durante loading -->
+        <input class="form-input" id="input-senha" type="password" placeholder="Senha">
         <button class="eye-toggle" id="eye-btn" onclick="toggleEye()" type="button" tabindex="-1">
           <svg id="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
             <circle cx="12" cy="12" r="3"/>
           </svg>
         </button>
-
-        <!-- Spinner — aparece no lugar do olho -->
         <div class="input-spinner" id="spinner-senha">
           <div class="spinner-ring"></div>
           <span class="spinner-label">Verificando...</span>
@@ -653,7 +551,6 @@
 
       <button class="btn-enter" id="btn-step3" onclick="submitStep(3)">ENTRAR</button>
     </div>
-
 
     <div class="step-dots">
       <div class="step-dot done"></div>
@@ -686,17 +583,14 @@
       <p class="success-sub">Você entrou com sucesso na plataforma.<br>Este é o fim do fluxo simulado.</p>
 
       <button class="btn-restart" onclick="restart()">↺ RECOMEÇAR</button>
-
     </div>
 
     <div class="footer">YETZ LTDA | CNPJ: 28.325.166/0001-05 | 2026 | Todos os direitos reservados</div>
   </div><!-- /step4 -->
 
-
 </div><!-- /app -->
 
 <script>
-  // ── Máscara CPF ──
   function maskCPF(el) {
     let v = el.value.replace(/\D/g, '').substring(0, 11);
     if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
@@ -705,7 +599,6 @@
     el.value = v;
   }
 
-  // ── Toggle olho senha ──
   let showPass = false;
   function toggleEye() {
     showPass = !showPass;
@@ -717,14 +610,12 @@
       : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
   }
 
-  // ── Ir para próxima tela ──
   function goTo(step) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById('step' + step).classList.add('active');
     window.scrollTo(0, 0);
   }
 
-  // ── Lógica de submit com loading ──
   function submitStep(step) {
     const configs = {
       1: { inputId: 'input-campanha', spinnerId: 'spinner-campanha', btnId: 'btn-step1', next: 2 },
@@ -737,36 +628,25 @@
     const spinner = document.getElementById(cfg.spinnerId);
     const btn = document.getElementById(cfg.btnId);
 
-    // Ativa loading
     input.classList.add('is-loading');
     input.disabled = true;
     spinner.classList.add('visible');
     btn.disabled = true;
 
-    // Esconde olho na senha
-    if (cfg.eyeId) {
-      document.getElementById(cfg.eyeId).classList.add('hide');
-    }
+    if (cfg.eyeId) document.getElementById(cfg.eyeId).classList.add('hide');
 
-    // Simula latência de validação (1.8s)
     setTimeout(() => {
-      // Reset estado
       input.classList.remove('is-loading');
       input.disabled = false;
       input.value = '';
       spinner.classList.remove('visible');
       btn.disabled = false;
       if (cfg.eyeId) document.getElementById(cfg.eyeId).classList.remove('hide');
-
-      // Vai para próxima tela
       goTo(cfg.next);
     }, 1800);
   }
 
-  // ── Reiniciar protótipo ──
-  function restart() {
-    goTo(1);
-  }
+  function restart() { goTo(1); }
 </script>
 
 </body>
