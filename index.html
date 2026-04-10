@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>YetzPay — Protótipo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Oxanium', Arial, sans-serif;
+      background: #3a3a3a;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* Badge de protótipo */
+    .proto-badge {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      font-size: 11px;
+      font-family: Arial, sans-serif;
+      padding: 4px 14px;
+      border-radius: 20px;
+      z-index: 9999;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+    }
+
+    /* Container mobile */
+    .app {
+      width: 430px;
+      min-height: 100vh;
+      background: #57b847;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      width: 100%;
+      height: 580px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .phone-frame {
+      width: 260px;
+      height: 370px;
+      border: 3px solid rgba(255,255,255,0.35);
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .hero-person {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Card YetzPay sobre o frame */
+    .card-wrap {
+      position: absolute;
+      bottom: 88px;
+      left: 58px;
+      width: 145px;
+      transform: rotate(-4deg);
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.3));
+    }
+
+    .yetz-card {
+      width: 145px;
+      height: 92px;
+      background: linear-gradient(135deg, #5cc94a 0%, #3da82f 60%, #2d8a22 100%);
+      border-radius: 10px;
+      padding: 10px 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .yetz-card::before {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .yetz-card::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; left: -10px;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .card-logo {
+      height: 14px;
+      filter: brightness(0) invert(1);
+      opacity: 0.9;
+    }
+
+    .card-nfc {
+      position: absolute;
+      top: 10px; right: 12px;
+      width: 18px; height: 18px;
+      opacity: 0.7;
+    }
+
+    .card-mastercard {
+      position: absolute;
+      bottom: 10px; right: 12px;
+      display: flex;
+    }
+
+    .mc-circle {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+    }
+
+    .mc-red { background: #EB001B; }
+    .mc-orange { background: #F79E1B; margin-left: -8px; mix-blend-mode: multiply; }
+
+    /* ── TEXTO ── */
+    .welcome {
+      color: #fff;
+      text-align: center;
+      font-size: 16px;
+      line-height: 1.6;
+      padding: 0 32px;
+      margin-bottom: 28px;
+    }
+
+    /* ── STEPS ── */
+    .screen { display: none; width: 100%; flex-direction: column; align-items: center; }
+    .screen.active { display: flex; }
+
+    /* ── FORM ── */
+    .form-area {
+      width: 100%;
+      padding: 0 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .input-wrapper {
+      position: relative;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
+    /* Ícone esquerdo */
+    .input-icon-left {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #57b847;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 56px;
+      border-radius: 600px;
+      border: none;
+      background: #fff;
+      padding: 0 48px 0 54px;
+      font-family: 'Oxanium', Arial, sans-serif;
+      font-size: 13px;
+      color: #333;
+      outline: none;
+      transition: background 0.25s, box-shadow 0.25s;
+      letter-spacing: 0.5px;
+    }
+
+    .form-input::placeholder {
+      color: #9ea3a7;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .form-input:focus:not(:disabled) {
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+    }
+
+    /* Estado de loading no input */
+    .form-input.is-loading {
+      background: #f2f2f2;
+      color: #aaa;
+      cursor: not-allowed;
+    }
+
+    /* Spinner direita do input */
+    .input-spinner {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: none;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .input-spinner.visible { display: flex; }
+
+    .spinner-ring {
+      width: 20px;
+      height: 20px;
+      border: 2.5px solid #e0e0e0;
+      border-top-color: #57b847;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    .spinner-label {
+      font-size: 11px;
+      color: #aaa;
+      font-family: 'Oxanium', Arial, sans-serif;
+      white-space: nowrap;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Ícone olho — senha */
+    .eye-toggle {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #9ea3a7;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      transition: opacity 0.2s;
+    }
+
+    .eye-toggle.hide { display: none; }
+
+    /* Botão ENTRAR */
+    .btn-enter {
+      width: 100%;
+      height: 60px;
+      border-radius: 600px;
+      border: 2px solid rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-family: 'Oxanium', Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 20px;
+    }
+
+    .btn-enter:hover:not(:disabled) { background: rgba(255,255,255,0.22); }
+    .btn-enter:active:not(:disabled) { transform: scale(0.98); }
+    .btn-enter:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    /* Link secundário */
+    .link-secondary {
+      color: rgba(255,255,255,0.75);
+      font-size: 12px;
+      text-align: center;
+      margin-top: 16px;
+      cursor: pointer;
+      text-decoration: underline;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── STEP DOTS ── */
+    .step-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .step-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .step-dot.active {
+      background: #fff;
+      transform: scale(1.25);
+    }
+
+    .step-dot.done {
+      background: rgba(255,255,255,0.6);
+    }
+
+    /* ── SUCCESS ── */
+    .success-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 32px;
+      color: #fff;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      animation: pop 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    @keyframes pop {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    .success-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .success-sub {
+      font-size: 14px;
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+
+    .btn-restart {
+      margin-top: 36px;
+      padding: 14px 36px;
+      border-radius: 600px;
+      border: 2px solid rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-family: 'Oxanium', Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      cursor: pointer;
+    }
+
+    /* ── WHATSAPP ── */
+    .whatsapp-fab {
+      position: fixed;
+      bottom: 20px;
+      right: calc(50% - 215px + 16px);
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: auto;
+      padding: 24px 16px 20px;
+      color: rgba(255,255,255,0.55);
+      font-size: 11px;
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+
+    /* Animação de fade entre telas */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .screen.active { animation: fadeIn 0.3s ease; }
+
+    /* ── ANOTAÇÃO DE SOLUÇÃO ── */
+    .solution-note {
+      margin: 12px 28px 0;
+      padding: 10px 16px;
+      background: rgba(0,0,0,0.18);
+      border-radius: 12px;
+      border-left: 3px solid rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.85);
+      font-size: 11px;
+      line-height: 1.5;
+      letter-spacing: 0.2px;
+    }
+
+    .solution-note strong { color: #fff; font-weight: 600; }
+
+    @media (max-width: 440px) {
+      .app { width: 100%; }
+      .whatsapp-fab { right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="proto-badge">🔵 Protótipo — YetzPay Login Flow</div>
+
+<div class="app">
+
+  <!-- ════════════════════════════════
+       TELA 1 — CAMPANHA
+       ════════════════════════════════ -->
+  <div class="screen active" id="step1">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="phone-frame">
+        <img class="hero-person"
+             src="https://yetzpay.com.br/assets/img-01-DrCpd6en.png"
+             alt="Pessoa"
+             onerror="this.style.background='#4aaa39';this.removeAttribute('src')">
+      </div>
+      <div class="card-wrap">
+        <div class="yetz-card">
+          <img class="card-logo"
+               src="https://yetzpay.com.br/assets/nova-logo-BWXOLnxS.svg"
+               alt="YetzPay"
+               onerror="this.style.display='none'">
+          <svg class="card-nfc" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2">
+            <path d="M1 6a11 11 0 0 1 0 12"/>
+            <path d="M5 8.4a7 7 0 0 1 0 7.2"/>
+            <path d="M9 10.8a3 3 0 0 1 0 2.4"/>
+          </svg>
+          <div class="card-mastercard">
+            <div class="mc-circle mc-red"></div>
+            <div class="mc-circle mc-orange"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Texto boas-vindas -->
+    <p class="welcome">
+      Que bom ter você por aqui!<br>
+      Para começarmos, informe seus dados de acesso.
+    </p>
+
+    <!-- Form -->
+    <div class="form-area">
+      <div class="input-wrapper">
+        <!-- ícone chave -->
+        <span class="input-icon-left">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="7.5" cy="15.5" r="5.5"/>
+            <path d="M21 2l-9.6 9.6"/>
+            <path d="M15.5 7.5l3 3L22 7l-3-3"/>
+          </svg>
+        </span>
+
+        <input class="form-input" id="input-campanha"
+               type="text"
+               placeholder="Campanha"
+               autocomplete="off">
+
+        <!-- Spinner de loading (solução proposta) -->
+        <div class="input-spinner" id="spinner-campanha">
+          <div class="spinner-ring"></div>
+          <span class="spinner-label">Verificando...</span>
+        </div>
+      </div>
+
+      <button class="btn-enter" id="btn-step1" onclick="submitStep(1)">ENTRAR</button>
+
+      <p class="link-secondary">Como fazer seu cadastro</p>
+      <p class="link-secondary" style="margin-top:8px;">Clique aqui se não receber seu código</p>
+    </div>
+
+    <!-- Nota explicativa da solução -->
+    <div class="solution-note">
+      <strong>💡 Solução proposta:</strong> ao clicar em "Entrar", o feedback de loading aparece <strong>dentro do campo</strong> (spinner + "Verificando..."), não apenas no botão — que fica oculto pelo teclado virtual no mobile.
+    </div>
+
+    <!-- Step dots -->
+    <div class="step-dots">
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">YETZ LTDA | CNPJ: 28.325.166/0001-05 | 2026 | Todos os direitos reservados</div>
+  </div><!-- /step1 -->
+
+
+  <!-- ════════════════════════════════
+       TELA 2 — CPF
+       ════════════════════════════════ -->
+  <div class="screen" id="step2">
+
+    <div class="hero">
+      <div class="phone-frame">
+        <img class="hero-person"
+             src="https://yetzpay.com.br/assets/img-03-QauEq33L.png"
+             alt="Pessoa"
+             onerror="this.style.background='#4aaa39';this.removeAttribute('src')">
+      </div>
+      <div class="card-wrap">
+        <div class="yetz-card">
+          <img class="card-logo"
+               src="https://yetzpay.com.br/assets/nova-logo-BWXOLnxS.svg"
+               alt="YetzPay"
+               onerror="this.style.display='none'">
+          <svg class="card-nfc" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2">
+            <path d="M1 6a11 11 0 0 1 0 12"/>
+            <path d="M5 8.4a7 7 0 0 1 0 7.2"/>
+            <path d="M9 10.8a3 3 0 0 1 0 2.4"/>
+          </svg>
+          <div class="card-mastercard">
+            <div class="mc-circle mc-red"></div>
+            <div class="mc-circle mc-orange"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="welcome">
+      Ótimo! Agora informe<br>
+      o seu <strong>CPF</strong>.
+    </p>
+
+    <div class="form-area">
+      <div class="input-wrapper">
+        <span class="input-icon-left">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </span>
+
+        <input class="form-input" id="input-cpf"
+               type="text"
+               placeholder="CPF"
+               autocomplete="off"
+               maxlength="14"
+               oninput="maskCPF(this)">
+
+        <div class="input-spinner" id="spinner-cpf">
+          <div class="spinner-ring"></div>
+          <span class="spinner-label">Verificando...</span>
+        </div>
+      </div>
+
+      <button class="btn-enter" id="btn-step2" onclick="submitStep(2)">ENTRAR</button>
+    </div>
+
+    <div class="solution-note">
+      <strong>💡 Solução proposta:</strong> mesmo comportamento — spinner dentro do campo de CPF enquanto o teclado está aberto, garantindo feedback visível.
+    </div>
+
+    <div class="step-dots">
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div>
+    </div>
+
+    <div class="footer">YETZ LTDA | CNPJ: 28.325.166/0001-05 | 2026 | Todos os direitos reservados</div>
+  </div><!-- /step2 -->
+
+
+  <!-- ════════════════════════════════
+       TELA 3 — SENHA
+       ════════════════════════════════ -->
+  <div class="screen" id="step3">
+
+    <div class="hero">
+      <div class="phone-frame">
+        <img class="hero-person"
+             src="https://yetzpay.com.br/assets/img-05-CB7w9oxD.png"
+             alt="Pessoa"
+             onerror="this.style.background='#4aaa39';this.removeAttribute('src')">
+      </div>
+      <div class="card-wrap">
+        <div class="yetz-card">
+          <img class="card-logo"
+               src="https://yetzpay.com.br/assets/nova-logo-BWXOLnxS.svg"
+               alt="YetzPay"
+               onerror="this.style.display='none'">
+          <svg class="card-nfc" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2">
+            <path d="M1 6a11 11 0 0 1 0 12"/>
+            <path d="M5 8.4a7 7 0 0 1 0 7.2"/>
+            <path d="M9 10.8a3 3 0 0 1 0 2.4"/>
+          </svg>
+          <div class="card-mastercard">
+            <div class="mc-circle mc-red"></div>
+            <div class="mc-circle mc-orange"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="welcome">
+      Perfeito! Agora informe<br>
+      a sua <strong>Senha</strong>.
+    </p>
+
+    <div class="form-area">
+      <div class="input-wrapper">
+        <span class="input-icon-left">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </span>
+
+        <input class="form-input" id="input-senha"
+               type="password"
+               placeholder="Senha">
+
+        <!-- Olho — oculto durante loading -->
+        <button class="eye-toggle" id="eye-btn" onclick="toggleEye()" type="button" tabindex="-1">
+          <svg id="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+
+        <!-- Spinner — aparece no lugar do olho -->
+        <div class="input-spinner" id="spinner-senha">
+          <div class="spinner-ring"></div>
+          <span class="spinner-label">Verificando...</span>
+        </div>
+      </div>
+
+      <button class="btn-enter" id="btn-step3" onclick="submitStep(3)">ENTRAR</button>
+    </div>
+
+    <div class="solution-note">
+      <strong>💡 Senha:</strong> o ícone de olho é <strong>substituído</strong> pelo spinner durante o loading — não há conflito visual entre os dois elementos.
+    </div>
+
+    <div class="step-dots">
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+    </div>
+
+    <div class="footer">YETZ LTDA | CNPJ: 28.325.166/0001-05 | 2026 | Todos os direitos reservados</div>
+  </div><!-- /step3 -->
+
+
+  <!-- ════════════════════════════════
+       TELA 4 — SUCESSO
+       ════════════════════════════════ -->
+  <div class="screen" id="step4">
+    <div class="success-wrap">
+
+      <div class="success-icon">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+
+      <img src="https://yetzpay.com.br/assets/logo-mobile-DEa1NyHM.svg"
+           alt="YetzPay"
+           style="height:32px; filter:brightness(0) invert(1); margin-bottom:32px;"
+           onerror="this.style.display='none'">
+
+      <p class="success-title">Login realizado!</p>
+      <p class="success-sub">Você entrou com sucesso na plataforma.<br>Este é o fim do fluxo simulado.</p>
+
+      <button class="btn-restart" onclick="restart()">↺ RECOMEÇAR</button>
+
+      <div class="solution-note" style="margin-top:40px;">
+        <strong>✅ Resumo da solução:</strong><br>
+        Em todas as etapas, o spinner apareceu <strong>dentro do campo</strong>, visível mesmo com o teclado virtual aberto. O campo foi desabilitado durante o loading, prevenindo duplos envios.
+      </div>
+    </div>
+
+    <div class="footer">YETZ LTDA | CNPJ: 28.325.166/0001-05 | 2026 | Todos os direitos reservados</div>
+  </div><!-- /step4 -->
+
+  <!-- WhatsApp FAB -->
+  <div class="whatsapp-fab" title="Precisa de ajuda?">
+    <svg width="28" height="28" viewBox="0 0 42 42" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21 3.5C11.34 3.5 3.5 11.34 3.5 21c0 3.08.82 5.97 2.26 8.47L3.5 38.5l9.27-2.22A17.4 17.4 0 0 0 21 38.5c9.66 0 17.5-7.84 17.5-17.5S30.66 3.5 21 3.5zm0 31.5a14.9 14.9 0 0 1-7.6-2.08l-.54-.32-5.6 1.34 1.38-5.43-.35-.56A14.9 14.9 0 0 1 6.1 21C6.1 12.77 12.77 6.1 21 6.1S35.9 12.77 35.9 21 29.23 35 21 35zm8.18-10.98c-.45-.22-2.64-1.3-3.05-1.45-.41-.15-.7-.22-.99.22-.29.44-1.12 1.45-1.38 1.75-.25.29-.5.33-.96.11-.45-.22-1.91-.7-3.63-2.24-1.34-1.19-2.24-2.67-2.5-3.12-.26-.44-.03-.68.2-.9.2-.2.45-.52.67-.78.22-.26.3-.44.44-.73.15-.3.07-.55-.04-.78-.1-.22-1-2.4-1.36-3.29-.36-.87-.72-.75-1-.77-.26-.01-.55-.02-.84-.02-.29 0-.77.11-1.17.55-.4.44-1.54 1.5-1.54 3.67 0 2.16 1.58 4.25 1.8 4.54.22.3 3.1 4.74 7.53 6.65 1.05.45 1.87.72 2.51.92.06.02.11.03.17.05 1.05.34 2.01.29 2.76.18.84-.13 2.6-1.06 2.97-2.08.36-1.02.36-1.9.25-2.08-.1-.18-.38-.29-.84-.51z"/>
+    </svg>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+  // ── Máscara CPF ──
+  function maskCPF(el) {
+    let v = el.value.replace(/\D/g, '').substring(0, 11);
+    if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+    else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+    else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+    el.value = v;
+  }
+
+  // ── Toggle olho senha ──
+  let showPass = false;
+  function toggleEye() {
+    showPass = !showPass;
+    const inp = document.getElementById('input-senha');
+    inp.type = showPass ? 'text' : 'password';
+    const icon = document.getElementById('eye-icon');
+    icon.innerHTML = showPass
+      ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+      : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  }
+
+  // ── Ir para próxima tela ──
+  function goTo(step) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // ── Lógica de submit com loading ──
+  function submitStep(step) {
+    const configs = {
+      1: { inputId: 'input-campanha', spinnerId: 'spinner-campanha', btnId: 'btn-step1', next: 2 },
+      2: { inputId: 'input-cpf',      spinnerId: 'spinner-cpf',      btnId: 'btn-step2', next: 3 },
+      3: { inputId: 'input-senha',    spinnerId: 'spinner-senha',    btnId: 'btn-step3', next: 4, eyeId: 'eye-btn' },
+    };
+
+    const cfg = configs[step];
+    const input = document.getElementById(cfg.inputId);
+    const spinner = document.getElementById(cfg.spinnerId);
+    const btn = document.getElementById(cfg.btnId);
+
+    // Ativa loading
+    input.classList.add('is-loading');
+    input.disabled = true;
+    spinner.classList.add('visible');
+    btn.disabled = true;
+
+    // Esconde olho na senha
+    if (cfg.eyeId) {
+      document.getElementById(cfg.eyeId).classList.add('hide');
+    }
+
+    // Simula latência de validação (1.8s)
+    setTimeout(() => {
+      // Reset estado
+      input.classList.remove('is-loading');
+      input.disabled = false;
+      input.value = '';
+      spinner.classList.remove('visible');
+      btn.disabled = false;
+      if (cfg.eyeId) document.getElementById(cfg.eyeId).classList.remove('hide');
+
+      // Vai para próxima tela
+      goTo(cfg.next);
+    }, 1800);
+  }
+
+  // ── Reiniciar protótipo ──
+  function restart() {
+    goTo(1);
+  }
+</script>
+
+</body>
+</html>
